@@ -1,13 +1,14 @@
 openapi: 3.0.3
 info:
-  title: Swagger API Course FE
+  title: Swagger API FE
   description: |-
     This is a list api of course FE
   contact:
-    email: lttd0204@gmail.com
+    email: vanchihieu5@gmail.com
   version: 1.0.11
 servers:
-  - url: https://api-shop-l5ir.onrender.com
+  - url: https://api-shop-yzwk.onrender.com
+    # - url: http://localhost:3001
 tags:
   - name: auth
     description: Everything about auth

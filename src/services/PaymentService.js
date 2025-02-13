@@ -136,14 +136,14 @@ const getVNPayIpnPaymentVNPay = (data) => {
             existingOrder.user.toString()
           );
 
-          await pushNotification({
-            context: CONTEXT_NOTIFICATION.PAYMENT_VN_PAY,
-            title: ACTION_NOTIFICATION_ORDER.PAYMENT_VN_PAY_SUCCESS,
-            body: `Đơn hàng với id ${existingOrder?._id?.toString()} đã được thanh toán thành công`,
-            referenceId: existingOrder._id?.toString(),
-            recipientIds,
-            deviceTokens,
-          });
+          // await pushNotification({
+          //   context: CONTEXT_NOTIFICATION.PAYMENT_VN_PAY,
+          //   title: ACTION_NOTIFICATION_ORDER.PAYMENT_VN_PAY_SUCCESS,
+          //   body: `Đơn hàng với id ${existingOrder?._id?.toString()} đã được thanh toán thành công`,
+          //   referenceId: existingOrder._id?.toString(),
+          //   recipientIds,
+          //   deviceTokens,
+          // });
         }
 
         resolve({

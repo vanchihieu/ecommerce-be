@@ -119,15 +119,15 @@ const createOrder = (newOrder) => {
           createdOrder.user.toString()
         );
 
-        await pushNotification({
-          context: CONTEXT_NOTIFICATION.ORDER,
-          title: ACTION_NOTIFICATION_ORDER.CREATE_ORDER,
-          body: `Đơn hàng với id ${createdOrder?._id?.toString()} đã được đặt thành công`,
-          referenceId: createdOrder?._id?.toString(),
-          recipientIds,
-          deviceTokens,
-        });
-        
+        // await pushNotification({
+        //   context: CONTEXT_NOTIFICATION.ORDER,
+        //   title: ACTION_NOTIFICATION_ORDER.CREATE_ORDER,
+        //   body: `Đơn hàng với id ${createdOrder?._id?.toString()} đã được đặt thành công`,
+        //   referenceId: createdOrder?._id?.toString(),
+        //   recipientIds,
+        //   deviceTokens,
+        // });
+
         // await EmailService.sendEmailCreateOrder(email, orderItems);
 
         if (createdOrder) {
@@ -141,7 +141,7 @@ const createOrder = (newOrder) => {
         }
       }
     } catch (e) {
-      //   console.log('e', e)
+      console.log("e", e);
       reject(e);
     }
   });
@@ -229,6 +229,8 @@ const deleteOrderProduct = (id) => {
 };
 
 const updateOrder = (id, data) => {
+  console.log("🚀 ~ updateOrder ~ data:", data);
+
   return new Promise(async (resolve, reject) => {
     try {
       const existingOrder = await Order.findById(id);
@@ -244,7 +246,15 @@ const updateOrder = (id, data) => {
         return;
       }
 
-      existingOrder.orderItems = data.orderItems || existingOrder.orderItems;
+      // existingOrder.orderItems = data.orderItems || existingOrder.orderItems;
+      if (Array.isArray(data.orderItems) && data.orderItems.length > 0) {
+        data.orderItems.forEach((item, index) => {
+          if (existingOrder.orderItems[index]) {
+            existingOrder.orderItems[index].name =
+              item.name || existingOrder.orderItems[index].name;
+          }
+        });
+      }
       existingOrder.shippingAddress =
         data.shippingAddress || existingOrder.shippingAddress;
       existingOrder.paymentMethod =
@@ -266,6 +276,8 @@ const updateOrder = (id, data) => {
         statusMessage: "Success",
       });
     } catch (error) {
+      console.log("🚀 ~ returnnewPromise ~ error:", error);
+
       reject(error);
     }
   });
@@ -286,8 +298,8 @@ const updateStatusOrder = (id, data) => {
         return;
       }
 
-      if(String(data.status)) {
-        existingOrder.status = data.status
+      if (String(data.status)) {
+        existingOrder.status = data.status;
       }
 
       if (data.isPaid) {

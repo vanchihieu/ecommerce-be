@@ -31,6 +31,8 @@ const createOrder = async (req, res) => {
       status: statusMessage,
     });
   } catch (e) {
+    console.log(e);
+
     return res.status(CONFIG_MESSAGE_ERRORS.INTERNAL_ERROR.status).json({
       message: "Internal Server Error",
       data: null,
@@ -176,7 +178,6 @@ const updateOrder = async (req, res) => {
   }
 };
 
-
 const updateStatusOrder = async (req, res) => {
   try {
     const orderId = req.params.orderId;
@@ -310,5 +311,5 @@ module.exports = {
   cancelOrderProduct,
   getDetailsOrderOfMe,
   cancelOrderOfMe,
-  updateStatusOrder
+  updateStatusOrder,
 };
